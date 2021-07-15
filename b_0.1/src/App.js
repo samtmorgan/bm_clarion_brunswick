@@ -6,7 +6,9 @@ import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-// import Badge from 'react-bootstrap/Badge'
+// import Badge from 'react-bootstrap/Badge';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 
 
 
@@ -22,7 +24,22 @@ class App extends React.Component {
                     {'plot': '5', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
                     {'plot': '6', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
                     {'plot': '7', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                    {'plot': '8', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},               
+                    {'plot': '8', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '9', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '10', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '11', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '12', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '13', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '14', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '15', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '16', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},   
+                    {'plot': '17', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '18', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '19', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '20', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '21', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '22', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '23', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},              
                   ]
     }
   }
@@ -31,30 +48,26 @@ class App extends React.Component {
         <Container className='container'>
           <Alert className='alert' variant='outline-dark'>Brunswick house b_0.1</Alert>
           {/* <Jumbotron variant="dark">model app</Jumbotron> */}
-          <DataTable data={this.state.apartments}/>
+          <Floors data={this.state.apartments}/>
+          <br />
+          <hl />
+          <Top data={this.state.apartments}/>
         </Container>
       )
     }
 }
 
-class DataTable extends React.Component {
+class Floors extends React.Component {
   render() {
-    const data = [...this.props.data];
-    // const lightBtn = <Button variant='outline-dark'>light</Button>
-
-    // const lightBtn = <Button variant='dark'>{this.props.plot}</Button>
-
-    const tableRows = data.map((apartment) =>
-      <tr>
-        {/* <td><lightBtn plot={apartment.plot} /></td> */}
-        {/* <td>{lightBtn plot=apartment.plot}</td> */}
-        {/* <td>plot {apartment.plot}</td> */}
-        <td><Button variant='light'>Apartment {apartment.plot}</Button></td>
-        <td>Level {apartment.level}</td>
-        <td>Block {apartment.block}</td>
-        <td> {apartment.beds} Bed</td>
-        <td> {apartment.area}</td>
-      </tr>
+    const data = [...this.props.data];    
+    const level00Buttons = data.filter(apartment => apartment.level === '00').map((apartment) =>
+        <td><Button variant='light'>No {apartment.plot}</Button></td>
+    )
+    const level01Buttons = data.filter(apartment => apartment.level === '01').map((apartment) =>
+    <td><Button variant='light'>No {apartment.plot}</Button></td>
+    )
+    const level02Buttons = data.filter(apartment => apartment.level === '02').map((apartment) =>
+      <td><Button variant='light'>No {apartment.plot}</Button></td>
     )
     return (
       <div>
@@ -63,17 +76,84 @@ class DataTable extends React.Component {
         <thead>
           <tr>
             {/* <th></th> */}
-            <th>Apartment</th>
+            {/* <th>Apartment</th>
             <th>Level</th>
             <th>Block</th>
             <th>Number of bedrooms</th>
-            <th>Net Internal Area</th>
+            <th>Net Internal Area</th> */}
           </tr>
         </thead>
         <tbody>
-          {tableRows}
+          <tr>
+            <td>L 00</td>
+            {level00Buttons}
+          </tr>
+          <tr>
+            <td>L 01</td>
+            {level01Buttons}
+          </tr>
+          <tr>
+            <td>L 02</td>
+            {level02Buttons}
+          </tr>
         </tbody>
       </Table>
+    </div>
+    )
+  }
+}
+
+class Top extends React.Component {
+  render() {
+    const data = [...this.props.data];    
+    const level00Buttons = data.filter(apartment => apartment.level === '00').map((apartment) =>
+        <td><Button variant='light'>No {apartment.plot}</Button></td>
+    )
+    const level01Buttons = data.filter(apartment => apartment.level === '01').map((apartment) =>
+    <td><Button variant='light'>No {apartment.plot}</Button></td>
+    )
+    const level02Buttons = data.filter(apartment => apartment.level === '02').map((apartment) =>
+      <td><Button variant='light'>No {apartment.plot}</Button></td>
+    )
+    return (
+      <div>
+      {/* <Table  bordered hover size="sm" variant="light"> */}
+      <Tabs>
+        <Tab eventKey="floors" title="Floors">
+        <Table hover  variant="">
+          <thead>
+            <tr>
+              {/* <th></th> */}
+              {/* <th>Apartment</th>
+              <th>Level</th>
+              <th>Block</th>
+              <th>Number of bedrooms</th>
+              <th>Net Internal Area</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>L 00</td>
+              {level00Buttons}
+            </tr>
+            <tr>
+              <td>L 01</td>
+              {level01Buttons}
+            </tr>
+            <tr>
+              <td>L 02</td>
+              {level02Buttons}
+            </tr>
+          </tbody>
+        </Table>
+        </Tab>
+        <Tab eventKey="bedrooms" title="Bedrooms">
+          
+        </Tab>
+        <Tab eventKey="beds" title="Contact" >
+          
+        </Tab>
+      </Tabs>
     </div>
     )
   }

@@ -18,11 +18,11 @@ class App extends React.Component {
       apartments: [ {'plot': '1', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
                     {'plot': '2', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
                     {'plot': '3', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                    {'plot': '4', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                    {'plot': '5', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                    {'plot': '6', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                    {'plot': '7', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                    {'plot': '8', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},               
+                    {'plot': '4', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '5', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '6', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '7', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
+                    {'plot': '8', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},               
                   ]
     }
   }
