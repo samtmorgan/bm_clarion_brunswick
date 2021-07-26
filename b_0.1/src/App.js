@@ -230,8 +230,8 @@ class Top extends React.Component {
     );
     let allButtonsFiltered = [];
     while(allButtons.length > 0) {
-      if(allButtons.length >= 10) {
-        allButtonsFiltered.push(<tr>{allButtons.splice(0, 9)}</tr>);
+      if(allButtons.length >= 13) {
+        allButtonsFiltered.push(<tr>{allButtons.splice(0, 13)}</tr>);
       } else {
         allButtonsFiltered.push(<tr>{allButtons.splice(0, allButtons.length)}</tr>)
       }
