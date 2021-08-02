@@ -1,15 +1,19 @@
 import './App.css';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Alert from 'react-bootstrap/Alert';
+// import Alert from 'react-bootstrap/Alert';
 // import Jumbotron from "react-bootstrap/Jumbotron";
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
+// import Table from 'react-bootstrap/Table';
+// import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 // import Badge from 'react-bootstrap/Badge';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
-
+// import Tabs from 'react-bootstrap/Tabs';
+// import Tab from 'react-bootstrap/Tab';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+// import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+// import ToggleButton from 'react-bootstrap/ToggleButton';
 
 
 
@@ -102,46 +106,191 @@ class App extends React.Component {
                     {plotNumber:'C 4-6',level:'4',block:'C',number:'120',beds:'2',area:65},
                     {plotNumber:'C 4-7',level:'4',block:'C',number:'121',beds:'3',area:78.7}
                   ]
-
-                  // [ {'plot': '1', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '2', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '3', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '4', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '5', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '6', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '7', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '8', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '9', 'level': '00', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '10', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '11', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '12', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '13', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '14', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '15', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '16', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},   
-                  //   {'plot': '17', 'level': '01', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '18', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '19', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '20', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '21', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '22', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},
-                  //   {'plot': '23', 'level': '02', 'beds': '3', 'area': '70.5sqm', 'block': 'A'},              
-                  // ]
     }
   }
     render() {
       return(
-        <Container className='container'>
-          <Alert className='alert' variant='outline-dark'>Brunswick house b_0.1</Alert>
-          {/* <Jumbotron variant="dark">model app</Jumbotron> */}
-          {/* <Floors data={this.state.apartments}/> */}
-          <br />
-          <hl />
-          <Top data={this.state.apartments}/>
+        <Container fluid>
+          <Row>
+            <Col className='title_banner'>
+              <br/>
+              <h1 className='title' >Brunswick House</h1>
+              <hr className='line'/>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={2}>
+              <FilterComponent />
+            </Col>            
+            <Col md={10}>
+              <ContainerInterface 
+                oneBeds={this.state.apartments.filter(apartment => apartment.beds === '1')}
+                twoBeds={this.state.apartments.filter(apartment => apartment.beds === '2')}
+                threeBeds={this.state.apartments.filter(apartment => apartment.beds === '3')}
+              />
+            </Col>
+          </ Row>
+          <Row>
+            {/* <ToggleButtonFilter /> */}
+          </Row>
         </Container>
       )
     }
 }
+
+
+
+
+class ContainerInterface extends React.Component {
+  render() {
+    // let button = <button className='button' >button</button>
+    const makeRows = function(apartments, title) {
+      let buttons = [...apartments].map((apartment) => 
+      <Col md={1}><button className="button">{apartment.number}</button></Col>
+    );
+      let output = [];
+      // output.push(<Row className='row_pad'><Col><button className='button'>{title}</button></Col></Row>)
+      output.push(<Row className='row_pad'><Col><h2>One Beds</h2></Col></Row>)
+      while(buttons.length > 0) {
+        if(buttons.length >= 12) {
+          output.push(<Row className='row_pad'>{buttons.splice(0, 12)}</Row>);
+        } else {
+          output.push(<Row className='row_pad'>{buttons.splice(0, buttons.length)}</Row>)
+        }
+      }
+      return output;
+    };
+    return (
+      <Container fluid>
+        {makeRows(this.props.oneBeds, 'One Beds')}
+      </Container>
+    )
+  }
+}
+
+
+// function ToggleButtonFilter() {
+//   // const [value, setValue] = useState([1, 3]);
+//   const [value, setValue] = [1, 3];
+
+//   /*
+//    * The second argument that will be passed to
+//    * `handleChange` from `ToggleButtonGroup`
+//    * is the SyntheticEvent object, but we are
+//    * not using it in this example so we will omit it.
+//    */
+//   // const handleChange = (val) => setValue(val);
+//   const handleChange = function(val) {
+
+//   }
+
+//   return (
+//     <ToggleButtonGroup type="checkbox" value={value} onChange={handleChange}>
+//       <ToggleButton id="tbg-btn-1" value={1}>
+//         Option 1
+//       </ToggleButton>
+//       <ToggleButton id="tbg-btn-2" value={2}>
+//         Option 2
+//       </ToggleButton>
+//       <ToggleButton id="tbg-btn-3" value={3}>
+//         Option 3
+//       </ToggleButton>
+//     </ToggleButtonGroup>
+//   );
+// }
+
+class FilterComponent extends React.Component {
+  render() {
+    const makeCheckBox = function(label, id, group) {
+      return <Col >
+              <Form>
+                <Form.Check
+                  inline
+                  label={label}
+                  name={group}
+                  type='checkbox'
+                  id={`${id}-checkbox`}
+                />
+              </Form>
+            </Col>
+    }
+    return (    
+
+    <Container className='container-border'>
+      
+      <br/>
+        <Row>
+          <Col >
+            <h2>Filter</h2>
+          </Col>
+        </Row>
+        <hr className='line'/>
+      <Container >
+        <Row>
+          <Col >
+            <h4>Bedrooms</h4>
+          </Col>
+        </Row>
+        <Row>
+          {makeCheckBox('1 Bed', '1_bed', 1)}
+        </Row>
+        <Row>
+          {makeCheckBox('2 Bed', '2_bed', 1)}
+        </Row>
+        <Row>
+          {makeCheckBox('3 Bed', '3_bed', 1)}     
+        </Row>
+        <br/>
+
+      </Container>
+      <hr className='line'/>
+      <Container >
+          <Col >
+          {/* <hr className='line'/> */}
+            <h4>Floor</h4>
+          </Col>
+        <Row>
+          {makeCheckBox('Ground', '0', 2)}
+        </Row>
+        <Row>
+          {makeCheckBox('First', '1', 2)}
+        </Row>
+        <Row>
+          {makeCheckBox('Second', '2', 2)}
+        </Row>
+        <Row>
+          {makeCheckBox('Third', '3', 2)}
+        </Row>
+        <Row>
+          {makeCheckBox('Fourth', '4', 2)}
+        </Row>
+        <br/>
+
+      </Container>
+    </Container>
+
+      // <Container>
+      //   <Row>
+      //     <Col md={3}>
+      //       <h3>beds</h3>
+      //     </Col>
+      //   </Row>
+      //   <Row>
+      //     <Col md={1}>
+      //       <button className='button'>One Beds</button>
+      //     </Col>
+      //     <Col md={1}>
+      //       <button className='button'>Two Beds</button>
+      //     </Col>
+      //     <Col md={1}>
+      //       <button className='button'>Three Beds</button>
+      //     </Col>
+      //   </Row>
+      // </Container>
+    )
+  }
+}
+
 
 // class Floors extends React.Component {
 //   render() {
@@ -189,147 +338,205 @@ class App extends React.Component {
 //   }
 // }
 
-class Top extends React.Component {
-  render() {
-    const data = [...this.props.data];    
-    const btnVariant = 'info'
-    const levelB0Buttons = data.filter(apartment => apartment.level === '0' && apartment.block === 'B').map((apartment) =>
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const levelB1Buttons = data.filter(apartment => apartment.level === '1' && apartment.block === 'B').map((apartment) =>
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const levelB2Buttons = data.filter(apartment => apartment.level === '2' && apartment.block === 'B').map((apartment) =>
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const levelB3Buttons = data.filter(apartment => apartment.level === '3' && apartment.block === 'B').map((apartment) =>
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const levelB4Buttons = data.filter(apartment => apartment.level === '4' && apartment.block === 'B').map((apartment) =>
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const levelC0Buttons = data.filter(apartment => apartment.level === '0' && apartment.block === 'C').map((apartment) =>
-    <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const levelC1Buttons = data.filter(apartment => apartment.level === '1' && apartment.block === 'C').map((apartment) =>
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const levelC2Buttons = data.filter(apartment => apartment.level === '2' && apartment.block === 'C').map((apartment) =>
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const levelC3Buttons = data.filter(apartment => apartment.level === '3' && apartment.block === 'C').map((apartment) =>
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const levelC4Buttons = data.filter(apartment => apartment.level === '4' && apartment.block === 'C').map((apartment) =>
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    const blockBCell = <td>Block B</td>;
-    const blockCCell = <td>Block C</td>;
-    const allButtons = data.map((apartment) => 
-      <td><Button variant={btnVariant}>{apartment.number}</Button></td>
-    );
-    let allButtonsFiltered = [];
-    while(allButtons.length > 0) {
-      if(allButtons.length >= 13) {
-        allButtonsFiltered.push(<tr>{allButtons.splice(0, 13)}</tr>);
-      } else {
-        allButtonsFiltered.push(<tr>{allButtons.splice(0, allButtons.length)}</tr>)
-      }
-    }
+// class Interface extends React.Component {
+//   render() {
+//     const btnVariant = 'info';
+//     const makeRows = function(apartments) {
+//       let buttons = [...apartments].map((apartment) => 
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//       let output = []
+//       while(buttons.length > 0) {
+//         if(buttons.length >= 10) {
+//           output.push(<tr>{buttons.splice(0, 10)}</tr>);
+//         } else {
+//           output.push(<tr>{buttons.splice(0, buttons.length)}</tr>)
+//         }
+//       }
+//       return output;
+//     };
+//     let oneBedRows = makeRows(this.props.oneBeds);
+//     let twoBedRows = makeRows(this.props.twoBeds);
+//     let threeBedRows = makeRows(this.props.threeBeds);
+//     return (
+//       <div >
+//         <Table size=''>
+//           <tbody>
+//             <tr>
+//               <td className="block-btn" colSpan='10'>
+//                 <div >
+//                   <Button className='' variant={btnVariant} size="">1 Bed</Button>
+//                 </div>
+//               </td>             
+//             </tr>
+//             {oneBedRows}
+//             <tr>
+//               <td className="block-btn" colSpan='10'>
+//                 <div >
+//                   <Button className='' variant={btnVariant} size="">2 Bed</Button>
+//                 </div>
+//               </td>             
+//             </tr>
+//             {twoBedRows}
+//             <tr>
+//             <td className="block-btn" colSpan='10'>
+//                 <div >
+//                   <Button className='' variant={btnVariant} size="">3 Bed</Button>
+//                 </div>
+//               </td>             
+//             </tr>
+//             {makeRows(this.props.threeBeds)}
+//           </tbody>
+//         </Table>
+//       </div>
+//     )
+//   }
+// }
 
+// class Top extends React.Component {
+//   render() {
+//     const data = [...this.props.data];    
+//     const btnVariant = 'info'
+//     const levelB0Buttons = data.filter(apartment => apartment.level === '0' && apartment.block === 'B').map((apartment) =>
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const levelB1Buttons = data.filter(apartment => apartment.level === '1' && apartment.block === 'B').map((apartment) =>
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const levelB2Buttons = data.filter(apartment => apartment.level === '2' && apartment.block === 'B').map((apartment) =>
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const levelB3Buttons = data.filter(apartment => apartment.level === '3' && apartment.block === 'B').map((apartment) =>
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const levelB4Buttons = data.filter(apartment => apartment.level === '4' && apartment.block === 'B').map((apartment) =>
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const levelC0Buttons = data.filter(apartment => apartment.level === '0' && apartment.block === 'C').map((apartment) =>
+//     <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const levelC1Buttons = data.filter(apartment => apartment.level === '1' && apartment.block === 'C').map((apartment) =>
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const levelC2Buttons = data.filter(apartment => apartment.level === '2' && apartment.block === 'C').map((apartment) =>
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const levelC3Buttons = data.filter(apartment => apartment.level === '3' && apartment.block === 'C').map((apartment) =>
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const levelC4Buttons = data.filter(apartment => apartment.level === '4' && apartment.block === 'C').map((apartment) =>
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     const blockBCell = <td>Block B</td>;
+//     const blockCCell = <td>Block C</td>;
+//     const allButtons = data.map((apartment) => 
+//       <td><Button variant={btnVariant}>{apartment.number}</Button></td>
+//     );
+//     let allButtonsFiltered = [];
+//     while(allButtons.length > 0) {
+//       if(allButtons.length >= 13) {
+//         allButtonsFiltered.push(<tr>{allButtons.splice(0, 13)}</tr>);
+//       } else {
+//         allButtonsFiltered.push(<tr>{allButtons.splice(0, allButtons.length)}</tr>)
+//       }
+//     }
+//     return (
+//       <div>
+//       {/* <Table  bordered hover size="sm" variant="light"> */}
+//       <Tabs>
+//         <Tab eventKey="floors" title="Floors">
+//         <Table responsive="" hover  variant="">
+//           {/* <thead>
+//             <tr>
+//               <th></th>
+//               <th>Apartment</th>
+//               <th>Level</th>
+//               <th>Block</th>
+//               <th>Number of bedrooms</th>
+//               <th>Net Internal Area</th>
+//             </tr>
+//           </thead> */}
+//           <tbody>
+//             <tr>
+//               <td>L 00</td>
+//               {blockBCell}
+//               {levelB0Buttons}
+//             </tr>
+//             <tr>
+//               <td></td>
+//               {blockCCell}
+//               {levelC0Buttons}
+//             </tr>
 
+//             <tr>
+//               <td>L 01</td>
+//               {blockBCell}
+//               {levelB1Buttons}
+//             </tr>
+//             <tr>
+//               <td></td>
+//               {blockCCell}
+//               {levelC1Buttons}
+//             </tr>
 
+//             <tr>
+//               <td>L 02</td>
+//               {blockBCell}
+//               {levelB2Buttons}
+//             </tr>
+//             <tr>
+//               <td></td>
+//               {blockCCell}
+//               {levelC2Buttons}
+//             </tr>
 
-    return (
-      <div>
-      {/* <Table  bordered hover size="sm" variant="light"> */}
-      <Tabs>
-        <Tab eventKey="floors" title="Floors">
-        <Table responsive="" hover  variant="">
-          {/* <thead>
-            <tr>
-              <th></th>
-              <th>Apartment</th>
-              <th>Level</th>
-              <th>Block</th>
-              <th>Number of bedrooms</th>
-              <th>Net Internal Area</th>
-            </tr>
-          </thead> */}
-          <tbody>
-            <tr>
-              <td>L 00</td>
-              {blockBCell}
-              {levelB0Buttons}
-            </tr>
-            <tr>
-              <td></td>
-              {blockCCell}
-              {levelC0Buttons}
-            </tr>
+//             <tr>
+//               <td>L 03</td>
+//               {blockBCell}
+//               {levelB3Buttons}
+//             </tr>
+//             <tr>
+//               <td></td>
+//               {blockCCell}
+//               {levelC3Buttons}
+//             </tr>
 
-            <tr>
-              <td>L 01</td>
-              {blockBCell}
-              {levelB1Buttons}
-            </tr>
-            <tr>
-              <td></td>
-              {blockCCell}
-              {levelC1Buttons}
-            </tr>
+//             <tr>
+//               <td>L 04</td>
+//               {blockBCell}
+//               {levelB4Buttons}
+//             </tr>
+//             <tr>
+//               <td></td>
+//               {blockCCell}
+//               {levelC4Buttons}
+//             </tr>
+//           </tbody>
+//         </Table>
+//         </Tab>
+//         <Tab eventKey="all" title="All">
+//           <Table>
+//             <tbody>
+//               {allButtonsFiltered}
+//             </tbody>
+//           </Table>
+//         </Tab>
+//           <Tab eventKey="beds" title="Beds" >
+//             <br></br>
+//             <Tabs>
+//               <Tab eventKey="1 bed" title="1 Bed">
+              
+//               </Tab>
+//               <Tab eventKey="2 bed" title="2 Bed">
 
-            <tr>
-              <td>L 02</td>
-              {blockBCell}
-              {levelB2Buttons}
-            </tr>
-            <tr>
-              <td></td>
-              {blockCCell}
-              {levelC2Buttons}
-            </tr>
-
-            <tr>
-              <td>L 03</td>
-              {blockBCell}
-              {levelB3Buttons}
-            </tr>
-            <tr>
-              <td></td>
-              {blockCCell}
-              {levelC3Buttons}
-            </tr>
-
-            <tr>
-              <td>L 04</td>
-              {blockBCell}
-              {levelB4Buttons}
-            </tr>
-            <tr>
-              <td></td>
-              {blockCCell}
-              {levelC4Buttons}
-            </tr>
-          </tbody>
-        </Table>
-        </Tab>
-        <Tab eventKey="all" title="All">
-          <Table>
-            <tbody>
-              {allButtonsFiltered}
-            </tbody>
-          </Table>
-
-        </Tab>
-        <Tab eventKey="beds" title="Contact" >
-          
-        </Tab>
-      </Tabs>
-    </div>
-    )
-  }
-}
+//               </Tab>
+//           </Tabs>
+//         </Tab>
+//       </Tabs>
+//     </div>
+//     )
+//   }
+// }
 
 export default App;
 
