@@ -1,0 +1,36 @@
+.title {
+  font-family: "Libre Caslon",serif;
+  font-weight: normal;
+  text-align: center;
+  color: #d2ebcd;
+}
+
+.root {
+  flex-grow: 1;
+}
+
+/* .root_container {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
+
+  width: 100%;
+  min-height: 100vh;
+  background-color: #00191e;
+} */
+
+/* 
+.center {
+  text-align: center;
+} */
+
+/* #root {
+  width: 100%;
+  background-color: #00191e;
+  height:100vmin;
+} */
+
+/* #body {
+  background-color: #00191e;
+} */
