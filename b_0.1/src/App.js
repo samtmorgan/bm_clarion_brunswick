@@ -105,24 +105,25 @@ class App extends React.Component {
                     {plotNumber:'C 4-5',level:'4',block:'C',number:'119',beds:'1',area:51.3},
                     {plotNumber:'C 4-6',level:'4',block:'C',number:'120',beds:'2',area:65},
                     {plotNumber:'C 4-7',level:'4',block:'C',number:'121',beds:'3',area:78.7}
-                  ]
+                  ],
+      filteredApartments: []
     }
   }
     render() {
       return(
         <Container fluid>
           <Row>
-            <Col className='title_banner'>
+            <Col className='title-banner'>
               <br/>
               <h1 className='title' >Brunswick House</h1>
-              <hr className='line'/>
+              {/* <hr className='line'/> */}
             </Col>
           </Row>
-          <Row>
-            <Col md={2}>
+          <Row >
+            <Col className='filter-background' md={2}>
               <FilterComponent />
             </Col>            
-            <Col md={10}>
+            <Col className='light-background' md={10}>
               <ContainerInterface 
                 oneBeds={this.state.apartments.filter(apartment => apartment.beds === '1')}
                 twoBeds={this.state.apartments.filter(apartment => apartment.beds === '2')}
@@ -149,20 +150,22 @@ class ContainerInterface extends React.Component {
       <Col md={1}><button className="button">{apartment.number}</button></Col>
     );
       let output = [];
-      // output.push(<Row className='row_pad'><Col><button className='button'>{title}</button></Col></Row>)
-      output.push(<Row className='row_pad'><Col><h2>One Beds</h2></Col></Row>)
+      // output.push(<Row className='row-pad'><Col><button className='button'>{title}</button></Col></Row>)
+      // output.push(<Row className='row-pad'><Col><h2>One Beds</h2></Col></Row>)
       while(buttons.length > 0) {
         if(buttons.length >= 12) {
-          output.push(<Row className='row_pad'>{buttons.splice(0, 12)}</Row>);
+          output.push(<Row className='row-pad'>{buttons.splice(0, 12)}</Row>);
         } else {
-          output.push(<Row className='row_pad'>{buttons.splice(0, buttons.length)}</Row>)
+          output.push(<Row className='row-pad'>{buttons.splice(0, buttons.length)}</Row>)
         }
       }
       return output;
     };
     return (
       <Container fluid>
-        {makeRows(this.props.oneBeds, 'One Beds')}
+        {/* {makeRows(this.props.oneBeds, 'One Beds')} */}
+        {makeRows(this.props.oneBeds, )}
+
       </Container>
     )
   }
@@ -219,36 +222,38 @@ class FilterComponent extends React.Component {
     <Container className='container-border'>
       
       <br/>
-        <Row>
-          <Col >
-            <h2>Filter</h2>
-          </Col>
-        </Row>
-        <hr className='line'/>
+        
       <Container >
         <Row>
-          <Col >
-            <h4>Bedrooms</h4>
-          </Col>
+            {/* <h2>Filters</h2> */}
+            <h4>Filters</h4>
         </Row>
-        <Row>
-          {makeCheckBox('1 Bed', '1_bed', 1)}
-        </Row>
-        <Row>
-          {makeCheckBox('2 Bed', '2_bed', 1)}
-        </Row>
-        <Row>
-          {makeCheckBox('3 Bed', '3_bed', 1)}     
-        </Row>
-        <br/>
-
       </Container>
-      <hr className='line'/>
-      <Container >
-          <Col >
-          {/* <hr className='line'/> */}
-            <h4>Floor</h4>
-          </Col>
+        <hr className='line'/>
+      <Container>
+        
+        <Row>
+            {/* <h4>Bedrooms</h4> */}
+            <h5>Bedrooms</h5>
+        </Row>
+        <Row>
+          {makeCheckBox('1 Bed', '1-bed', 1)}
+        </Row>
+        <Row>
+          {makeCheckBox('2 Bed', '2-bed', 1)}
+        </Row>
+        <Row>
+          {makeCheckBox('3 Bed', '3-bed', 1)}     
+        </Row>
+      </Container>
+        {/* <hr className='line'/> */}
+      <Container>
+        <Row> 
+          {/* <h4>Floor</h4> */}
+          <h5>Floor</h5>
+        </Row>
+        {/* <br/> */}
+          
         <Row>
           {makeCheckBox('Ground', '0', 2)}
         </Row>
@@ -264,7 +269,14 @@ class FilterComponent extends React.Component {
         <Row>
           {makeCheckBox('Fourth', '4', 2)}
         </Row>
-        <br/>
+        {/* <br/> */}
+      </Container>
+      <hr className='line'/>
+      <Container >
+      <Row>
+          {makeCheckBox('Show All', 'all', 3)}
+        </Row>
+
 
       </Container>
     </Container>

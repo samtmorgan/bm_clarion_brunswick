@@ -1,115 +1,96 @@
-/* .App {
-  text-align: center;
-} */
-
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-} */
-
-/* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-} */
-
-/* .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} */
-
-/* .App-link {
-  color: #61dafb;
-} */
-
-/* @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-/* .col {
-  border: 3px;
-  border-color: #282c34;
-  background-color: #5675b4;
-} */
 
 .button {
   /* border-style: hidden; */
   border-style: solid;
-  border-width: 1px;
-  border-color: #d2ebcd;
+  border-width: 1.5px;
+  /* border-color: #d2ebcd; */
+  border-color: #8ea18a;
+
   /* border: 5px, solid, #282c34; */
   /* border-radius: 2px; */
   /* border-collapse: collapse; */
-  border-radius: 100%;
-  width: 60px;
-  height: 60px;
-  display:block;
+  /* border-radius:50%; */
+  /* width: 60px;
+  height: 60px; */
+  width: 80px;
+  height: 80px;
+  display: block;
   /* background-color: #d2ebcd; */
-  background-color: #00191e;
-
-  color: #d2ebcd;
-  font-family: "Libre Caslon",serif;
+  /* background-color:#fff8f0; */
+  background-color: #fff;
+  text-align: center;
+  /* background-color: #00191e; */
+  /* color: #d2ebcd; */
+  /* color: #00191e; */
+  color: #8ea18a;
+  /* font-family: "Libre Caslon",serif; */
   font-size: 22px;
 }
 
-/* .button:active {
-  border-color: #9db1c4;
-  background-color: #9db1c4;
-} */
-
-.button:focus {
+.button:active {
   border-color: #8ea18a;
   background-color: #8ea18a;
 }
 
+/* .button:focus {
+  border-color: #8ea18a;
+  background-color: #8ea18a;
+} */
+
 .title {
   font-family: "Libre Caslon",serif;
   text-align:center;
-  color: #d2ebcd;
+  /* color: #d2ebcd; */
+  /* color: #00191e; */
+  color:#fff8f0;
+  font-size: 3.5rem;
 }
 
-h2 {
+/* h2 {
   font-family: "Libre Caslon",serif;
   text-align:center;
   color: #d2ebcd;
-}
+} */
 
-h4 {
+/* h2 {
+  font-family: "Roboto",sans-serif;
+	font-weight: 400;
+	color: #333;
+  text-align: center;
+} */
+
+/* h4 {
   font-family: "Libre Caslon",serif;
   text-align:center;
   color: #d2ebcd;
-}
+} */
 
-.title_banner {
+/* h4 {
+	font-size: 1.8rem;
+	line-height: 2.85rem;
+	font-family: "Roboto",sans-serif;
+	font-weight: 400;
+	color: #333;
+} */
+
+.title-banner {
   background-color: #00191e;
+  /* background: #fff; */
   width:100%;
+  
 }
 
-.container {
-  /* padding-left: 0px;
-  padding-right: 0px;
-  margin-right: 0px;
-  margin-left: 0px; */
+
+/* .container {
   width: 100%;
   background-color: #00191e;
-}
+} */
 
-.container-border {
+/* .container-border {
   border-style: solid;
   border-width: 1px;
   border-color: #d2ebcd;
-}
+} */
 
 .line {
   color: #d2ebcd;
@@ -119,11 +100,24 @@ h4 {
 
 #root {
   width: 100%;
-  background-color: #00191e;
+  /* background-color: #00191e; */
+  /* background-color: #d2ebcd; */
+
   height:100vmax
 }
 
-.row_pad {
+.light-background {
+  /* background-color: #d2ebcd */
+  background: #fff;
+}
+
+.filter-background {
+  background: #fff8f0;
+  background-color:#fff8f0;
+
+}
+
+.row-pad {
   padding-top: 12px;
 }
 
@@ -138,9 +132,12 @@ h4 {
 Class for react-bootstrap checkbox
 */
 .form-check {
-  font-family: "Libre Caslon",serif;
-  text-align:center;
-  color: #d2ebcd;
+  /* font-family: "Libre Caslon",serif; */
+  font-family: "Roboto",sans-serif;
+  /* text-align:center; */
+  color: #00191e;
+
+  /* color: #d2ebcd; */
   /* height: 400%;
   width: 400%; */
   /* background-color: #d2ebcd; */
