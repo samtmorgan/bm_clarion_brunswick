@@ -93,9 +93,9 @@
 } */
 
 .line {
-  color: #d2ebcd;
+  color: #8ea18a;
   border-width: 1px;
-  background-color: #d2ebcd;
+  /* background-color: #d2ebcd; */
 }
 
 #root {
