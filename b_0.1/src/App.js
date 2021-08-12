@@ -11,7 +11,7 @@ import Container from 'react-bootstrap/Container';
 // import Tab from 'react-bootstrap/Tab';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+// import Form from 'react-bootstrap/Form';
 // import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 // import ToggleButton from 'react-bootstrap/ToggleButton';
 import $ from 'jquery';
@@ -111,12 +111,12 @@ class App extends React.Component {
                     {plotNumber:'B 0-1',level:'Level 0',block:'B',number:'39',beds:'2 Bed',area:69.9},
                     {plotNumber:'B 0-2',level:'Level 0',block:'B',number:'40',beds:'2 Bed',area:65},
                     {plotNumber:'B 0-3',level:'Level 0',block:'B',number:'41',beds:'1 Bed',area:51.3},
-                    {plotNumber:'B 0-4',level:'Level 0',block:'B',number:'42',beds:'2 bed',area:76.4},
+                    {plotNumber:'B 0-4',level:'Level 0',block:'B',number:'42',beds:'2 Bed',area:76.4},
                     {plotNumber:'B 0-5',level:'Level 0',block:'B',number:'43',beds:'2 Bed',area:76},
                     {plotNumber:'B 0-6',level:'Level 0',block:'B',number:'44',beds:'1 Bed',area:53.5},
                     {plotNumber:'B 0-7',level:'Level 0',block:'B',number:'45',beds:'2 Bed',area:65},
                     {plotNumber:'B 0-8',level:'Level 0',block:'B',number:'46',beds:'2 Bed',area:69},
-                    {plotNumber:'B 0-9',level:'Level 0',block:'B',number:'47',beds:'1 bed',area:55.3},
+                    {plotNumber:'B 0-9',level:'Level 0',block:'B',number:'47',beds:'1 Bed',area:55.3},
                     {plotNumber:'B 1-1',level:'Level 1',block:'B',number:'48',beds:'1 Bed',area:68.8},
                     {plotNumber:'B 1-2',level:'Level 1',block:'B',number:'49',beds:'2 Bed',area:83.8},
                     {plotNumber:'B 1-3',level:'Level 1',block:'B',number:'50',beds:'2 Bed',area:65},
@@ -194,18 +194,14 @@ class App extends React.Component {
                   ],            
       filteredApartments: [ 
                   ],
-      // filters: [{'bed1':'false'}, {'bed2':'false'}, {'bed3':'false'}, {'floor0':'false'}, {'floor1':'false'}, {'floor2':'false'}, {'floor3':'false'}, {'floor4':'false'}],
-      // filters: {'bed1':'false', 'bed2':'false', 'bed3':'false', 'floor0':'false', 'floor1':'false', 'floor2':'false', 'floor3':'false', 'floor4':'false'},
       bed1:false,
       bed2:false,
       bed3:false,
-      Ground:false,    
-      First:false,             
-      Second:false,             
-      Third:false,             
-      Fourth:false,   
-      // checkedKeys:['1 bed', '2 bed', '3 bed', 'level 0', 'level 1', 'level 2', 'level 3', 'level 4'],
-      // checked:    [ false,   false,   false,   false,     false,     false,     false,     false],
+      ground:false,    
+      first:false,             
+      second:false,             
+      third:false,             
+      fourth:false,   
 
       checkedBedsKeys: ['1 Bed', '2 Bed', '3 Bed'],
       checkedBeds: [false, false, false],
@@ -213,146 +209,123 @@ class App extends React.Component {
       checkedLevel: [false, false, false, false, false],
             
     }
-    // this.handleCheck = this.handleCheck.bind(this);
-    this.filterApartmentsBeds = this.filterApartmentsBeds.bind(this);
-    // this.message = this.message.bind(this);
+    this.filterApartments = this.filterApartments.bind(this);
     this.handleCheck1Beds = this.handleCheck1Beds.bind(this);
     this.handleCheck2Beds = this.handleCheck2Beds.bind(this); 
     this.handleCheck3Beds = this.handleCheck3Beds.bind(this); 
-
-
-    // this.filterCheckboxes = this.filterCheckboxes.bind(this);
+    this.handleCheckGround = this.handleCheckGround.bind(this);
+    this.handleCheckFirst = this.handleCheckFirst.bind(this);
+    this.handleCheckSecond = this.handleCheckSecond.bind(this);
+    this.handleCheckThird = this.handleCheckThird.bind(this);
+    this.handleCheckFourth = this.handleCheckFourth.bind(this);
+    this.handleClickShowAll = this.handleClickShowAll.bind(this);
   }
 
-  // handleCheck(e) {
-  //   let stateFiltersCopy = {...this.state.filters};
-  //   stateFiltersCopy[e.target.id] = !this.state.filters[e.target.id];
-  //   this.setState({
-  //     // filters: !this.state.bed1
-  //     filters: stateFiltersCopy,
-  //   });
-  //   this.filterApartmentsBeds();
-  // }
+  filterApartments() {
+    // setup for beds filter
+    // keys to checked array
+    const checkedBedsKeys = ['1 Bed', '2 Bed', '3 Bed'];
+    // array to copy beds state checked values to
+    let checkedBeds = [];
+    // push beds state values to local array
+    checkedBeds.push(this.state.bed1, this.state.bed2, this.state.bed3);
+    // Array for keywords to search apartments beds param for
+    let valuesToSearchForBeds = [];
+    // filter which pushes beds keywords if corresponding checked boolean is true
+    checkedBedsKeys.forEach((element, index) => {if (checkedBeds[index]) {valuesToSearchForBeds.push(element)}}); 
+    
+    // floors setup
+    // keys to checked array
+    const checkedFloorKeys = ['Level 0', 'Level 1', 'Level 2', 'Level 3','Level 4'];  
+    // array to copy level state checked values to
+    let checkedLevels = [];
+    // push level state values to local array
+    checkedLevels.push(this.state.ground, this.state.first, this.state.second, this.state.third, this.state.fourth);
+    // Array for keywords to search apartments floors param for
+    let valuesToSearchForLevels = [];
+    // filter which pushes levels keywords if corresponding checked boolean is true
+    checkedFloorKeys.forEach((element, index) => {if (checkedLevels[index]) {valuesToSearchForLevels.push(element)}}); 
 
-  // handleCheckBeds(id, index) {
-  //   let tempArr = [...this.state.checkedBeds];
-  //   tempArr[index] = !this.state.checkedBeds[index];
-  //   this.setState({
-  //     checkedBeds: tempArr,
-  //   });
-  //   // this.filterApartmentsBeds();
-  // }
+    // filter of apartments, checking for beds and floor matches 
+    // const output = this.state.apartments.filter((apartment) => {return valuesToSearchForBeds.includes(apartment.beds)});
+    const output = this.state.apartments.filter((apartment) => {return valuesToSearchForBeds.includes(apartment.beds) && valuesToSearchForLevels.includes(apartment.level)});
 
-
-
-
-
-  filterApartmentsBeds() {
-    const checkedKeys = ['1 Bed', '2 Bed', '3 Bed'];
-    let checked =     [];
-    checked.push(this.state.bed1, this.state.bed2, this.state.bed3);
-    let valuesToSearchFor = [];
-    checkedKeys.forEach((element, index) => {if (checked[index]) {valuesToSearchFor.push(element)}}); 
-    // const valuesToSearchFor = checkedKeys.filter((index) => {return (checked[index] === true)});
-    const output = this.state.apartments.filter((apartment) => {return valuesToSearchFor.includes(apartment.beds)});
-    console.log('checked-' + checked, 'valuesToSearchFor-' + valuesToSearchFor, 'output-' + output);
+    console.log('checked-' + checkedBeds, 'valuesToSearchForBeds-' + valuesToSearchForBeds, 'output-' + output);
     this.setState({
       filteredApartments: output
     });
-
-    // if(this.state.checked[this.state.checkedKeys.indexOf(checkedKey)]) {
-    //   this.setState({
-    //     filteredApartments: this.state.apartments.filter((apartment) => {
-    //       return apartment.beds === checkedKey
-    //     })
-    //   })
-    // } else {
-    //   this.setState({
-    //     filteredApartments: []
-    //   })
-    // }
   }
-
-  // message() {
-  //       if(this.state.bed1) {
-  //           return "checked!"
-  //       }else{
-  //           return "not checked!"
-  //       }
-  //     };
-
-  // filterCheckboxesBeds() {
-  //   let output = 
-  //   this.state.checkedBedsKeys.map((id, index) => 
-  //     <div>
-  //       <input  type="checkbox" 
-  //               onChange={this.handleCheckBeds(id, index)}
-  //               defaultChecked={this.state.checkedBeds[index]}
-  //               id={id}
-  //         />
-  //       <label>{id}</label>
-  //       <p>this box is {this.message(index)}</p>
-  //     </div>
-  //   )
-  //   return output
-  // }
-
-    // const output =
-    //     Object.keys(this.state.filters).map((filterKey) => 
-    //       <div>
-    //         <input  type="checkbox" 
-    //                 onChange={this.handleCheck()}
-    //                 defaultChecked={this.state.filters.filterKey}
-    //                 id={filterKey}
-    //           />
-    //         <label>{filterKey}</label>
-    //         <p>this box is {this.message(this.state.filters[filterKey])}</p>
-    //       </div>
-    //   // <Col md={1}><button id={apartment.number} className="button" onClick={handleLightClick}>{apartment.number}</button></Col>
-    //     )
-    //     return output
-    //   }
 
     handleCheck1Beds() {
       this.setState({bed1: !this.state.bed1}, () => {
         // this is within the callback function of setState meaning setState is forced to execute prior to calling the function
-        this.filterApartmentsBeds()
+        this.filterApartments()
       })}; 
 
     handleCheck2Beds() {
       this.setState({bed2: !this.state.bed2}, () => {
         // this is within the callback function of setState meaning setState is forced to execute prior to calling the function
-        this.filterApartmentsBeds()
+        this.filterApartments()
       })}; 
 
     handleCheck3Beds() {
       this.setState({bed3: !this.state.bed3}, () => {
         // this is within the callback function of setState meaning setState is forced to execute prior to calling the function
-        this.filterApartmentsBeds()
+        this.filterApartments()
       })}; 
+    handleCheckGround() {
+      this.setState({ground: !this.state.ground}, () => {
+        // this is within the callback function of setState meaning setState is forced to execute prior to calling the function
+        this.filterApartments()
+      })}; 
+    handleCheckFirst() {
+      this.setState({first: !this.state.first}, () => {
+        // this is within the callback function of setState meaning setState is forced to execute prior to calling the function
+        this.filterApartments()
+      })}; 
+    handleCheckSecond() {
+      this.setState({second: !this.state.second}, () => {
+        // this is within the callback function of setState meaning setState is forced to execute prior to calling the function
+        this.filterApartments()
+      })};
+    handleCheckThird() {
+      this.setState({third: !this.state.third}, () => {
+        // this is within the callback function of setState meaning setState is forced to execute prior to calling the function
+        this.filterApartments()
+      })}; 
+    handleCheckFourth() {
+      this.setState({fourth: !this.state.fourth}, () => {
+        // this is within the callback function of setState meaning setState is forced to execute prior to calling the function
+        this.filterApartments()
+      })}; 
+
+    handleClickShowAll() {
+      let tempArr = [...this.state.apartments]
+      this.setState({
+        filteredApartments: tempArr
+      })
+      // this.setState({
+      //   bed1:true,
+      //   bed2:true,
+      //   bed3:true,
+      //   ground:true,    
+      //   first:true,             
+      //   second:true,             
+      //   third:true,             
+      //   fourth:true,  
+      // }, () => {
+      //   this.filterApartments()
+      // })
+    }
 
     render() {
 
-      let messageBed1=" "
-      if(this.state.bed1){
-        messageBed1="checked!"
-      }else{
-        messageBed1="not checked!"
-      }
-
-      let messageBed2=" "
-      if(this.state.bed2){
-        messageBed2="checked!"
-      }else{
-        messageBed2="not checked!"
-      }
-
-      let messageBed3=" "
-      if(this.state.bed3){
-        messageBed3="checked!"
-      }else{
-        messageBed3="not checked!"
-      }
+      // let messageBed1=" "
+      // if(this.state.bed1){
+      //   messageBed1="checked!"
+      // }else{
+      //   messageBed1="not checked!"
+      // };
       
       return(
         <Container fluid>
@@ -368,7 +341,7 @@ class App extends React.Component {
                 <br/>
                 <Container >
                   <Row>
-                      <h4>Filters</h4>
+                      <h4>Prefferences</h4>
                   </Row>
                 </Container>
                   <hr className='line'/>
@@ -383,7 +356,7 @@ class App extends React.Component {
                             defaultChecked={this.state.bed1}
                       />
                     <label>1 Bed</label>
-                    <p>this box is {messageBed1}</p>
+                    {/* <p>this box is {messageBed1}</p> */}
                   </div>
                   <div>
                     <input  type="checkbox" 
@@ -391,7 +364,6 @@ class App extends React.Component {
                             defaultChecked={this.state.bed2}
                       />
                     <label>2 Bed</label>
-                    <p>this box is {messageBed2}</p>
                   </div>
                   <div>
                     <input  type="checkbox" 
@@ -399,25 +371,65 @@ class App extends React.Component {
                             defaultChecked={this.state.bed3}
                       />
                     <label>3 Bed</label>
-                    <p>this box is {messageBed3}</p>
                   </div>
-                  {/* {this.filterCheckboxesBeds()} */}
-                    {/* {makeCheckBox('1 Bed', '1-bed', 1)}
-                    {makeCheckBox('2 Bed', '2-bed', 1)}
-                    {makeCheckBox('3 Bed', '3-bed', 1)}      */}
-                    <br/>
+                  
+                  <br/>
                 </Container>
                 <Container>
                   <Row>
                     <h5>Floor</h5>
                   </Row>
-                    {/* {makeCheckBox('Ground', '0', 2)}
-                    {makeCheckBox('First', '1', 2)}
-                    {makeCheckBox('Second', '2', 2)}
-                    {makeCheckBox('Third', '3', 2)}
-                    {makeCheckBox('Fourth', '4', 2)} */}
+                  <div>
+                    <input  type="checkbox" 
+                            onChange={this.handleCheckGround}
+                            defaultChecked={this.state.Ground}
+                      />
+                    <label>Ground</label>
+                  </div>
+                  <div>
+                    <input  type="checkbox" 
+                            onChange={this.handleCheckFirst}
+                            defaultChecked={this.state.First}
+                      />
+                    <label>First</label>
+                  </div>
+                  <div>
+                    <input  type="checkbox" 
+                            onChange={this.handleCheckSecond}
+                            defaultChecked={this.state.Second}
+                      />
+                    <label>Second</label>
+                  <div>
+                  </div>
+                    <input  type="checkbox" 
+                            onChange={this.handleCheckThird}
+                            defaultChecked={this.state.Third}
+                      />
+                    <label>Third</label>
+                  </div>
+                  <div>
+                    <input  type="checkbox" 
+                            onChange={this.handleCheckFourth}
+                            defaultChecked={this.state.Fourth}
+                      />
+                    <label>Fourth</label>
+                  </div>
+                  <p>length{this.state.filteredApartments.length}</p>
+                <hr className='line'/>                 
+
                 </Container>
-                <hr className='line'/>
+                <Container>
+                  <Row>
+                    <button className="button" onClick={this.handleClickShowAll}>Show all</button>
+                  </Row>
+                  <Row>
+                    <button className="button" onClick={this.handleClickShowAll}>Light selected</button>
+                  </Row>
+                  {/* <Row>
+                    <button onClick={this.handleClickShowAll}>Light selected</button>
+                  </Row> */}
+  
+                </Container>
                 <Container >
                 <Row>
                     {/* {makeCheckBox('Show All', 'all', 3)} */}
@@ -479,70 +491,7 @@ class ContainerInterface extends React.Component {
 
 
 
-class FilterComponent extends React.Component {
 
-    
-    render() {
-
-    
-
-    const makeCheckBox = function(label, id, group) {
-      return <Row>
-              <Col >
-                <Form>
-                  <Form.Check
-                    inline
-                    label={label}
-                    name={group}
-                    type='checkbox'
-                    id={`${id}-checkbox`}
-                  />
-                </Form>
-              </Col>
-            </Row>
-    }
-
-
-
-    return (    
-    <Container className='container-border'>
-      <br/>
-      <Container >
-        <Row>
-            <h4>Filters</h4>
-        </Row>
-      </Container>
-        <hr className='line'/>
-      <Container>
-        <Row>
-          <h5>Bedrooms</h5>
-        </Row>
-
-          {makeCheckBox('1 Bed', '1-bed', 1)}
-          {makeCheckBox('2 Bed', '2-bed', 1)}
-          {makeCheckBox('3 Bed', '3-bed', 1)}     
-          <br/>
-      </Container>
-      <Container>
-        <Row>
-          <h5>Floor</h5>
-        </Row>
-          {makeCheckBox('Ground', '0', 2)}
-          {makeCheckBox('First', '1', 2)}
-          {makeCheckBox('Second', '2', 2)}
-          {makeCheckBox('Third', '3', 2)}
-          {makeCheckBox('Fourth', '4', 2)}
-      </Container>
-      <hr className='line'/>
-      <Container >
-      <Row>
-          {makeCheckBox('Show All', 'all', 3)}
-        </Row>
-      </Container>
-    </Container>
-    )
-  }
-}
 
 
 // class Floors extends React.Component {
