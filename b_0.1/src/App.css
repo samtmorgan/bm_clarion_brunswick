@@ -32,10 +32,24 @@
   background-color: #8ea18a;
 }
 
-/* .button:focus {
+.button-filter {
+  /* border-style: hidden; */
+  border-style: solid;
+  border-width: 1.5px;
+  border-color: #8ea18a;
+  /* width: 80px; */
+  /* height: 80px; */
+  display: block;
+  background-color: #fff;
+  text-align: center;
+  color: #8ea18a;
+  font-size: 15px;
+}
+
+.button-filter:active {
   border-color: #8ea18a;
   background-color: #8ea18a;
-} */
+}
 
 .title {
   font-family: "Libre Caslon",serif;
@@ -46,32 +60,10 @@
   font-size: 3.5rem;
 }
 
-/* h2 {
-  font-family: "Libre Caslon",serif;
-  text-align:center;
-  color: #d2ebcd;
-} */
-
-/* h2 {
-  font-family: "Roboto",sans-serif;
-	font-weight: 400;
-	color: #333;
-  text-align: center;
-} */
-
-/* h4 {
-  font-family: "Libre Caslon",serif;
-  text-align:center;
-  color: #d2ebcd;
-} */
-
-/* h4 {
-	font-size: 1.8rem;
-	line-height: 2.85rem;
-	font-family: "Roboto",sans-serif;
-	font-weight: 400;
-	color: #333;
-} */
+.offcanvas {
+  width: 100vmax;
+  /* color: coral; */
+}
 
 .title-banner {
   background-color: #00191e;
@@ -81,16 +73,6 @@
 }
 
 
-/* .container {
-  width: 100%;
-  background-color: #00191e;
-} */
-
-/* .container-border {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #d2ebcd;
-} */
 
 .line {
   color: #8ea18a;
@@ -98,66 +80,36 @@
   /* background-color: #d2ebcd; */
 }
 
-#root {
-  width: 100%;
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  flex-flow: column;
+  height: 100%; 
+
+  /* width: 100%; \\\last used\\\ */
+
   /* background-color: #00191e; */
   /* background-color: #d2ebcd; */
 
-  height:100vmax
+  /* height:100vmax  \\\last used\\\ */
 }
 
 .light-background {
   /* background-color: #d2ebcd */
-  background: #fff;
+  /* background: #fff; \\\last used\\\ */
 }
 
 .filter-background {
-  background: #fff8f0;
+  /* background: #fff8f0; */
   background-color:#fff8f0;
-
+  height: 100%;
 }
 
 .row-pad {
   padding-top: 12px;
 }
-
-/* .checkbox_label {
-  font-family: "Libre Caslon",serif;
-  text-align:center;
-  color: #d2ebcd;
-  height: 50px
-} */
-
-/*
-Class for react-bootstrap checkbox
-*/
-.form-check {
-  /* font-family: "Libre Caslon",serif; */
-  font-family: "Roboto",sans-serif;
-  /* text-align:center; */
-  color: #00191e;
-
-  /* color: #d2ebcd; */
-  /* height: 400%;
-  width: 400%; */
-  /* background-color: #d2ebcd; */
-  transform: scale(1);
-}
-
-
-
-/* 
-.block-btn {
-  align-items: center;
-  justify-content: center;
-  width:fit-content;
-}
-
-.block-btn {
-  width:50px;
-} */
-
-/* .alert {
-  text-align:center;
-  font-size: 35px;
-} */
