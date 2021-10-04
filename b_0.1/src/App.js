@@ -19,6 +19,7 @@ import OffcanvasBody from 'react-bootstrap/OffcanvasBody';
 import OffcanvasTitle from 'react-bootstrap/OffcanvasTitle';
 import OffcanvasHeader from 'react-bootstrap/OffcanvasHeader';
 import $ from 'jquery';
+import logo from './latimer-logo-white.svg';
 
 
 
@@ -135,7 +136,7 @@ class App extends React.Component {
     this.handleClickShowNone = this.handleClickShowNone.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleShow = this.handleShow.bind(this);
-    // this.handleAvailabilityCheck = this.handleAvailabilityCheck.bind(this);
+    this.handleAvailabilityCheck = this.handleAvailabilityCheck.bind(this);
     // this.availabilityCheckboxes = this.availabilityCheckboxes.bind(this);
   }
 
@@ -258,45 +259,102 @@ class App extends React.Component {
       })
     };
 
-  
+    handleAvailabilityCheck(e) {
+      let apartmentsCopy = [...this.state.apartments];
+      const indexOfApartmentToChange = apartmentsCopy.findIndex((apartment => apartment.number === e.target.name));
+      apartmentsCopy[indexOfApartmentToChange].availability = !apartmentsCopy[indexOfApartmentToChange].availability;
+      this.setState({
+        apartments: apartmentsCopy
+      }, () => {this.filterApartments()
+      })};
 
-    render() {
-
-    const handleAvailabilityCheck = function (e) {
-        console.log('value of checkbox : ', e.target.name);
-      };
-
-    const availabilityCheckboxes = function (apartments) {   
+    availabilityCheckboxes(apartments) {   
       const checkboxes = 
         [...apartments].map((apartment) =>                    
-          <Col>
+          <Col key={apartment.name} >
             <input type='checkbox' 
+                   key={apartment.number} 
                    id={apartment.number} 
                    name={apartment.number}
                    checked={apartment.availability} 
-                   onClick={handleAvailabilityCheck} />
+                   onChange={this.handleAvailabilityCheck}
+                  // changed to onChange  
+                  // onClick={handleAvailabilityCheck} 
+                   />
             <label>{apartment.number}</label>
           </Col>
         );
       let output = [];
+      let keys = 0;
       while(checkboxes.length > 0) {
         if(checkboxes.length >= 5) {
-          output.push(<Row className='row-pad'>{checkboxes.splice(0, 5)}</Row>);
+          output.push(<Row key={keys} className='row-pad'>{checkboxes.splice(0, 5)}</Row>);
+          keys++;
+          // console.log(keys);
         } else {
-          output.push(<Row className='row-pad'>{checkboxes.splice(0, checkboxes.length)}<Col></Col><Col></Col></Row>)
+          keys++;
+          output.push(<Row key={keys} className='row-pad'>{checkboxes.splice(0, checkboxes.length)}<Col></Col><Col></Col></Row>);
+          // console.log(keys);
         }
       }
       return output;
     }
+
+
+
+
+
+    
+    render() {
+
+    // const handleAvailabilityCheck = function (e) {
+    //     console.log('value of checkbox : ', e.target.name);
+    //     console.log(this.state.apartments.filter((apartment) => apartment === e.target.name))
+    //   };
+
+    // const availabilityCheckboxes = function (apartments) {   
+    //   const checkboxes = 
+    //     [...apartments].map((apartment) =>                    
+    //       <Col key={apartment.name} >
+    //         <input type='checkbox' 
+    //                key={apartment.number} 
+    //                id={apartment.number} 
+    //                name={apartment.number}
+    //                checked={apartment.availability} 
+    //                onChange={this.handleAvailabilityCheck()}
+    //               // changed to onChange  
+    //               // onClick={handleAvailabilityCheck} 
+    //                />
+    //         <label>{apartment.number}</label>
+    //       </Col>
+    //     );
+    //   let output = [];
+    //   let keys = 0;
+    //   while(checkboxes.length > 0) {
+    //     if(checkboxes.length >= 5) {
+    //       output.push(<Row key={keys} className='row-pad'>{checkboxes.splice(0, 5)}</Row>);
+    //       keys++;
+    //       // console.log(keys);
+    //     } else {
+    //       keys++;
+    //       output.push(<Row key={keys} className='row-pad'>{checkboxes.splice(0, checkboxes.length)}<Col></Col><Col></Col></Row>);
+    //       // console.log(keys);
+    //     }
+    //   }
+    //   return output;
+    // }
       
       return(
         <div className='main'>
         <Container fluid>
-          <Row>
-            <Col className='title-banner'>
-              <br/>
-              <h1 className='title' >Brunswick House</h1>
-            </Col>
+          <Row className='title-banner'>
+              <Col md={3}>
+                <img className='latimer-logo' alt='Latimer by Clarion Housing Group logo' src={logo} />
+                {/* <img className='latimer-logo' alt='Latimer by Clarion Housing Group logo' src={logo} width="202" height="77" /> */}
+              </Col>
+              <Col md={6}>
+                <h1 className='title' >Brunswick House</h1>
+              </Col>
           </Row>
           <Row >
             <Col fluid className='filter-background' md={2}>
@@ -398,7 +456,7 @@ class App extends React.Component {
                         </OffcanvasHeader>
                         <OffcanvasBody>
                           <Container md={5}>
-                            {availabilityCheckboxes(this.state.apartments)}
+                            {this.availabilityCheckboxes(this.state.apartments)}
 
 
                             {/* {this.availabilityCheckboxes()} */}
@@ -433,7 +491,9 @@ class Buttons extends React.Component {
     }; 
 
     const generateButtons = function(apartments) {
-      let buttons = [...apartments].map((apartment) => 
+
+      let buttons = [...apartments].filter((apartment) => apartment.availability === true)
+                                   .map((apartment) => 
         <Col md={1}><button id={apartment.number} className="button" onClick={handleLightClick}>{apartment.number}</button></Col>
       )
       let output = [];

@@ -51,14 +51,7 @@
   background-color: #8ea18a;
 }
 
-.title {
-  font-family: "Libre Caslon",serif;
-  text-align:center;
-  /* color: #d2ebcd; */
-  /* color: #00191e; */
-  color:#fff8f0;
-  font-size: 3.5rem;
-}
+
 
 .offcanvas {
   width: 100vmax;
@@ -67,17 +60,35 @@
 
 .title-banner {
   background-color: #00191e;
+  height: 100px;
   /* background: #fff; */
-  width:100%;
-  
+  /* width:100%; */
+  /* padding: 10px; */
 }
 
+.latimer-logo {
+  height: 75px;
+  padding-left: 20px;
+  /* padding-top: 10px;
+  padding-bottom: 10px; */
+  /* the below is to center vertically */
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); /* or try 50% */
 
+}
 
-.line {
-  color: #8ea18a;
-  border-width: 1px;
-  /* background-color: #d2ebcd; */
+.title {
+  font-family: "Libre Caslon",serif;
+  text-align:center;
+  /* color: #d2ebcd; */
+  /* color: #00191e; */
+  color:#fff8f0;
+  font-size: 3.5rem;
+  /* the below is to center vertically */
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); /* or try 50% */
 }
 
 html,
@@ -112,4 +123,11 @@ body {
 
 .row-pad {
   padding-top: 12px;
+}
+
+img {
+	/* max-width: 100%;
+	width: 100%; */
+	height: auto;
+	display: block;
 }
