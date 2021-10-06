@@ -1,25 +1,20 @@
 import './App.css';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import Alert from 'react-bootstrap/Alert';
-// import Jumbotron from "react-bootstrap/Jumbotron";
-// import Table from 'react-bootstrap/Table';
-// import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-// import Badge from 'react-bootstrap/Badge';
-// import Tabs from 'react-bootstrap/Tabs';
-// import Tab from 'react-bootstrap/Tab';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-// import Form from 'react-bootstrap/Form';
-// import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-// import ToggleButton from 'react-bootstrap/ToggleButton';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import OffcanvasBody from 'react-bootstrap/OffcanvasBody';
 import OffcanvasTitle from 'react-bootstrap/OffcanvasTitle';
 import OffcanvasHeader from 'react-bootstrap/OffcanvasHeader';
 import $ from 'jquery';
 import logo from './latimer-logo-white.svg';
+import Popover from 'react-bootstrap/Popover';
+import PopoverBody from 'react-bootstrap/PopoverBody';
+import PopoverHeader from 'react-bootstrap/PopoverHeader';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+
 
 
 
@@ -111,7 +106,9 @@ class App extends React.Component {
                     {plotNumber:'C 4-5',level:'Level 4',block:'C',number:'119',beds:'1 Bed',area:51.3,availability:true},
                     {plotNumber:'C 4-6',level:'Level 4',block:'C',number:'120',beds:'2 Bed',area:65,availability:true},
                     {plotNumber:'C 4-7',level:'Level 4',block:'C',number:'121',beds:'3 Bed',area:78.7,availability:true}
-                  ],            
+                  ],  
+      // access config.js which was loaded in index.html 
+      // apartments: window.config,        
       filteredApartments: [],
       bed1:false,
       bed2:false,
@@ -137,6 +134,7 @@ class App extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleAvailabilityCheck = this.handleAvailabilityCheck.bind(this);
+    this.handleLightSelection = this.handleLightSelection.bind(this);
     // this.availabilityCheckboxes = this.availabilityCheckboxes.bind(this);
   }
 
@@ -171,8 +169,7 @@ class App extends React.Component {
                                                                        valuesToSearchForLevels.includes(apartment.level) && 
                                                                        apartment.availability
                                                                        });
-
-    console.log('checked-' + checkedBeds, 'valuesToSearchForBeds-' + valuesToSearchForBeds, 'output-' + output);
+    // console.log('checked-' + checkedBeds, 'valuesToSearchForBeds-' + valuesToSearchForBeds, 'output-' + output);
     this.setState({
       filteredApartments: output
     });
@@ -250,7 +247,13 @@ class App extends React.Component {
     handleClose() {
       this.setState({
         show:false
-      })
+      });
+    };
+
+    writeLocal(a) {
+      localStorage.setItem('apartments', JSON.stringify(a));
+      console.log('localStorage set - ', a);
+      console.log(this.state.apartments)
     };
 
     handleShow() {
@@ -265,7 +268,8 @@ class App extends React.Component {
       apartmentsCopy[indexOfApartmentToChange].availability = !apartmentsCopy[indexOfApartmentToChange].availability;
       this.setState({
         apartments: apartmentsCopy
-      }, () => {this.filterApartments()
+      }, () => {this.filterApartments();
+                this.writeLocal(apartmentsCopy);
       })};
 
     availabilityCheckboxes(apartments) {   
@@ -298,51 +302,33 @@ class App extends React.Component {
         }
       }
       return output;
+    };
+
+    componentDidMount() {
+      if(localStorage.getItem('apartments')) {
+        let localApartments = JSON.parse(localStorage.getItem('apartments'));
+        console.log('found local storage - ', localApartments)
+        this.setState({
+          apartments: localApartments
+        })
+      }
+    };
+
+    handleLightSelection() {
+      let nameArray = []
+      this.state.filteredApartments.forEach(apartment => {
+        nameArray.push(apartment.number);
+      });
+      $.ajax(
+        encodeURI("http://192.168.8.104:8080/api/v1.0/set_name_mask"), 
+        {
+        data:JSON.stringify({"name_mask": nameArray, "fade": 0.2, "auto_off": 10}),
+        method: "POST",
+        contentType: "application/json"
+      });
     }
 
-
-
-
-
-    
     render() {
-
-    // const handleAvailabilityCheck = function (e) {
-    //     console.log('value of checkbox : ', e.target.name);
-    //     console.log(this.state.apartments.filter((apartment) => apartment === e.target.name))
-    //   };
-
-    // const availabilityCheckboxes = function (apartments) {   
-    //   const checkboxes = 
-    //     [...apartments].map((apartment) =>                    
-    //       <Col key={apartment.name} >
-    //         <input type='checkbox' 
-    //                key={apartment.number} 
-    //                id={apartment.number} 
-    //                name={apartment.number}
-    //                checked={apartment.availability} 
-    //                onChange={this.handleAvailabilityCheck()}
-    //               // changed to onChange  
-    //               // onClick={handleAvailabilityCheck} 
-    //                />
-    //         <label>{apartment.number}</label>
-    //       </Col>
-    //     );
-    //   let output = [];
-    //   let keys = 0;
-    //   while(checkboxes.length > 0) {
-    //     if(checkboxes.length >= 5) {
-    //       output.push(<Row key={keys} className='row-pad'>{checkboxes.splice(0, 5)}</Row>);
-    //       keys++;
-    //       // console.log(keys);
-    //     } else {
-    //       keys++;
-    //       output.push(<Row key={keys} className='row-pad'>{checkboxes.splice(0, checkboxes.length)}<Col></Col><Col></Col></Row>);
-    //       // console.log(keys);
-    //     }
-    //   }
-    //   return output;
-    // }
       
       return(
         <div className='main'>
@@ -350,7 +336,6 @@ class App extends React.Component {
           <Row className='title-banner'>
               <Col md={3}>
                 <img className='latimer-logo' alt='Latimer by Clarion Housing Group logo' src={logo} />
-                {/* <img className='latimer-logo' alt='Latimer by Clarion Housing Group logo' src={logo} width="202" height="77" /> */}
               </Col>
               <Col md={6}>
                 <h1 className='title' >Brunswick House</h1>
@@ -445,7 +430,7 @@ class App extends React.Component {
                       {/* <button className="" onClick={this.handleClickShowNone}>Clear</button> */}
                   </Row>
                   <Row className='row-pad'>
-                    <button className="button-filter" >Light selection</button>
+                    <button className="button-filter" onClick={this.handleLightSelection}>Light selection</button>
                   </Row>   
                   <Row className='row-pad'>
                     <>
@@ -489,19 +474,34 @@ class Buttons extends React.Component {
         contentType: "application/json"
       });
     }; 
+  
+    const popover = (
+      <Popover id="popover-basic">
+        <Popover.Header as="h3">Popover right</Popover.Header>
+        <Popover.Body>
+          And here's some <strong>amazing</strong> content. It's very engaging.
+          right?
+        </Popover.Body>
+      </Popover>
+    );
 
     const generateButtons = function(apartments) {
-
       let buttons = [...apartments].filter((apartment) => apartment.availability === true)
                                    .map((apartment) => 
-        <Col md={1}><button id={apartment.number} className="button" onClick={handleLightClick}>{apartment.number}</button></Col>
-      )
+        <Col md={1}><button id={apartment.number} className="button" onClick={handleLightClick}>{apartment.number}</button></Col>)
+        // to be implemented to include plot details OR these details could be added to the button its self.
+        // <Col md={1}>
+        //   <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+        //     <button id={apartment.number} className="button" onClick={handleLightClick}>{apartment.number}</button>
+        //   </OverlayTrigger>
+        // </Col>)
+
       let output = [];
       while(buttons.length > 0) {
         if(buttons.length >= 12) {
           output.push(<Row className='row-pad'>{buttons.splice(0, 12)}</Row>);
         } else {
-          output.push(<Row className='row-pad'>{buttons.splice(0, buttons.length)}</Row>)
+          output.push(<Row className='row-pad'>{buttons.splice(0, buttons.length)}</Row>);
         }
       }
       return output;

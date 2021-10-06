@@ -54,7 +54,7 @@
 
 
 .offcanvas {
-  width: 100vmax;
+  width: 25vmax;
   /* color: coral; */
 }
 
@@ -106,7 +106,6 @@ body {
 
   /* background-color: #00191e; */
   /* background-color: #d2ebcd; */
-
   /* height:100vmax  \\\last used\\\ */
 }
 
@@ -118,7 +117,7 @@ body {
 .filter-background {
   /* background: #fff8f0; */
   background-color:#fff8f0;
-  height: 100%;
+  height: 100vmax;
 }
 
 .row-pad {
