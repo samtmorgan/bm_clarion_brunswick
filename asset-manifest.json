@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/bm_clarion_brunswick/static/css/main.ba8e6f95.css",
+    "main.js": "/bm_clarion_brunswick/static/js/main.021ce160.js",
+    "static/js/787.e0584ada.chunk.js": "/bm_clarion_brunswick/static/js/787.e0584ada.chunk.js",
+    "static/media/latimer-logo-white.svg": "/bm_clarion_brunswick/static/media/latimer-logo-white.a73cb0af23378f0d6336332d5182918a.svg",
+    "index.html": "/bm_clarion_brunswick/index.html",
+    "main.ba8e6f95.css.map": "/bm_clarion_brunswick/static/css/main.ba8e6f95.css.map",
+    "main.021ce160.js.map": "/bm_clarion_brunswick/static/js/main.021ce160.js.map",
+    "787.e0584ada.chunk.js.map": "/bm_clarion_brunswick/static/js/787.e0584ada.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ba8e6f95.css",
+    "static/js/main.021ce160.js"
+  ]
+}
