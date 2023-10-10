@@ -1,9 +1,12 @@
-# App for property marketing suite
+# App for a property marketing suite
 
-Used on a tablet to control the lighting in an interactive model of a new
-property development which allows the user to see where different apartments are located
-in the development. The app controls the lighting via the lighting controller API. In production the app is hosted on a Apache web server
-running on a Raspberry pi.
+- Used on a tablet to control the lighting in an interactive model of a new
+  property development which allows the user to see where different apartments are located
+  in the development.
+- The client had a small budget for this project so we produced a minimal single page app to get the job done.
+- This was a project I built in 2021 when I was still working as a Model Maker and learning the basics of JavaScript and jQuery, so in hindsight the code is not as clean as I would like it to be. I have included it here as an example of my work and to show how far I have come since then.
+- The app controls the lighting via the lighting controller API.
+- In production the app is hosted locally on a Apache web server running on a Raspberry pi.
 
 ## Built with
 
